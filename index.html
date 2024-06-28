@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team-23 Pizza Sales Report</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script type="module" src="./index.js"></script> 
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="multiselect-dropdown.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/css"></script>
+    <style type="text/css">
+        select {
+            color: black;
+            width: 15em;
+        }
+    </style>
+</head>
+
+<body class="all">
+    <div class="navbar">
+        <img class="logo" src="23 logo.png" alt="" width="200" height="100">
+
+        <a href="home.html">Home</a>
+        <a href="index.html">Report</a>
+        <div class="dropdown">
+          <button class="dropbtn">About 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="https://www.canva.com/design/DAGGziJvkkU/OpYjRLAB5tK8qw0S-whA0g/view?utm_content=DAGGziJvkkU&utm_campaign=designshare&utm_medium=link&utm_source=editor" target="_blank">Capstone Project</a>
+            <a href="https://mavenanalytics.io/data-playground?page=6&pageSize=5" target="_blank">Dataset Source</a>
+            <a href="https://drive.google.com/file/d/1moCEDXeSZqe4OUiROFCqApM_Eb0jAWT8/view?usp=sharing" target="_blank">ERD</a>
+          </div>
+        </div> 
+        <a href="dataset.html">Dataset</a>
+        <a href="our_team.html">Our Team</a>
+      </div>
+
+    <section class="sec1">
+        <img class="pizza" src="pizza.png" alt="Pizza">
+        <div class="title">PIZZA SALES REPORT<p>Jan 2015 - Dec 2015</p>
+        </div>
+        <img class="pizza" src="pizza.png" alt="Pizza">
+    </section>
+    </section>
+    <section class="sec2">
+        <div class="cont-mont">
+            <select id="month-select" name="month" multiple multiselect-search="true" multiselect-select-all="true"
+                placeholder="MONTH">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+        </div>
+
+        <div class="tot-or">TOTAL ORDERS<h1 id="total-orders">0</h1>
+        </div>
+        <div class="piz-type">NO. OF PIZZA TYPES<h1 id="no-of-pizza-types">0</h1>
+        </div>
+        <div class="tot-rev">TOTAL REVENUE<h1 id="total-revenue">$0</h1>
+        </div>
+        <div class="avg-rev">AVERAGE REVENUE<h1 id="average-revenue">$0</h1>
+        </div>
+
+        <div class="piz-name">
+            <select id="pizza-select" name="pizza name" multiple multiselect-search="true" multiselect-select-all="true"
+                placeholder="PIZZA NAME">
+                <option value="bbq_ckn">The Barbecue Chicken Pizza</option>
+                <option value="cali_ckn">The California Chicken Pizza</option>
+                <option value="ckn_alfredo">The Chicken Alfredo Pizza</option>
+                <option value="ckn_pesto">The Chicken Pesto Pizza</option>
+                <option value="southw_ckn">The Southwest Chicken Pizza</option>
+                <option value="thai_ckn">The Thai Chicken Pizza</option>
+                <option value="big_meat">The Big Meat Pizza</option>
+                <option value="classic_dlx">The Classic Deluxe Pizza</option>
+                <option value="hawaiian">The Hawaiian Pizza</option>
+                <option value="ital_cpcllo">The Italian Capocollo Pizza</option>
+                <option value="napolitana">The Napolitana Pizza</option>
+                <option value="pep_msh_pep">The Pepperoni, Mushroom, and Peppers Pizza</option>
+                <option value="pepperoni">The Pepperoni Pizza</option>
+                <option value="the_greek">The Greek Pizza</option>
+                <option value="brie_carre">The Brie Carre Pizza</option>
+                <option value="calabrese">The Calabrese Pizza</option>
+                <option value="ital_supr">The Italian Supreme Pizza</option>
+                <option value="peppr_salami">The Pepper Salami Pizza</option>
+                <option value="prsc_argla">The Prosciutto and Arugula Pizza</option>
+                <option value="sicilian">The Sicilian Pizza</option>
+                <option value="soppressata">The Soppressata Pizza</option>
+                <option value="spicy_ital">The Spicy Italian Pizza</option>
+                <option value="spinach_supr">The Spinach Supreme Pizza</option>
+                <option value="five_cheese">The Five Cheese Pizza</option>
+                <option value="four_cheese">The Four Cheese Pizza</option>
+                <option value="green_garden">The Green Garden Pizza</option>
+                <option value="ital_veggie">The Italian Vegetables Pizza</option>
+                <option value="mediterraneo">The Mediterranean Pizza</option>
+                <option value="mexicana">The Mexicana Pizza</option>
+                <option value="spin_pesto">The Spinach Pesto Pizza</option>
+                <option value="spinach_fet">The Spinach and Feta Pizza</option>
+                <option value="veggie_veg">The Vegetables + Vegetables Pizza</option>
+            </select>
+        </div>
+    </section>
+    <section class="sec3">
+        <p>TOTAL PIZZA SALES</p>
+        <h1 id="total-pizza-sales">0</h1>
+    </section>
+    <section class="sec4">
+        <div class="chartpart1">
+            <div class="chart1">
+                <canvas id="myChart1"></canvas>
+            </div>
+            <div class="chart2">
+                <canvas id="myChart2"></canvas>
+            </div>
+        </div>
+        <div class="chartpart2">
+            <div class="chart3">
+                <canvas id="myChart3"></canvas>
+            </div>
+            <div class="chart4">
+                <canvas id="myChart4"></canvas>
+            </div>
+            <div class="chart5">
+                <canvas id="myChart5"></canvas>
+            </div>
+        </div>
+    </section>
+</body>
+
+
+</html>
