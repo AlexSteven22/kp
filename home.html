@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team-23 Pizza Sales Report</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script type="module" src="./chart.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="multiselect-dropdown.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/css"></script>
+    <style type="text/css">
+        select {
+            color: black;
+            width: 15em;
+        }
+    </style>
+</head>
+
+<body class="all">
+    <div class="navbar">
+        <img class="logo" src="23 logo.png" alt="" width="200" height="100">
+
+        <a href="home.html">Home</a>
+        <a href="index.html">Report</a>
+        <div class="dropdown">
+          <button class="dropbtn">About 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="https://www.canva.com/design/DAGGziJvkkU/OpYjRLAB5tK8qw0S-whA0g/view?utm_content=DAGGziJvkkU&utm_campaign=designshare&utm_medium=link&utm_source=editor" target="_blank">Capstone Project</a>
+            <a href="https://mavenanalytics.io/data-playground?page=6&pageSize=5" target="_blank">Dataset Source</a>
+            <a href="https://drive.google.com/file/d/1moCEDXeSZqe4OUiROFCqApM_Eb0jAWT8/view?usp=sharing" target="_blank">ERD</a>
+          </div>
+        </div> 
+        <a href="dataset.html">Dataset</a>
+        <a href="our_team.html">Our Team</a>
+      </div>
+
+  
+    <div class="home-container" style="max-width:800px" id="band">
+        <div class="text-title-home">
+            <h1>PIZZA PLACE SALES</h1>
+        </div>
+        <div class="text-home">
+            <p>More Just Than Pizza</p>
+        </div>
+        <div class="text-penjelasan">
+            <p>This website contains data visualizations to solve business problems, find insights in sales data, and
+                find factors that influence sales numbers, as well as determine solutions to solve business problems</p>
+        </div>
+
+    </div>
+
+    <div class="penjelasan">
+        <div class="h1-container">
+            <h1>Business Understanding</h1>
+            <p>Data penjualan pizza dalam periode 1 tahun dari perusahaan
+                yang memiliki 15 atribut dan 48621 baris.
+                Kami telah melakukan analisa untuk memahami permasalahan bisnis yang dialami,
+                mencari insight dari data yang digunakan,
+                dan menemukan faktor-faktor yang mempengaruhi
+                kinerja penjualan pizza.</p>
+        </div>
+        <div class="h1-container">
+            <h1>Problem Statement</h1>
+            <p>"How to increase pizza order in September and
+                October from 3890 or 3883 to 4000 within 1 year / in the following year?"
+            </p>
+        </div>
+        <div class="h1-container">
+            <h1>Business Overview</h1>
+            <p>Data yang digunakan adalah data penjualan pizza selama periode tahun 2015
+                dengan berbagai macam jenis pizza dan topping</p>
+        </div>
+        <div class="h1-container">
+            <h1>Business Objective</h1>
+            <p>To increase pizza order in September and October from 3890 or 3883
+                to 4000 within 1 year / in the following year</p>
+        </div>
+    </div>
+
+    <div>
+        <h1 class="text-tools" style="color:#1565c0">
+            Tools and Partners
+        </h1>
+        <h1 class="tools2">
+            Tools and Partners
+        </h1>
+    </div>
+    <section class="sec6">
+        <div class="tools-container">
+            <div class="tools-member">
+                <img src="tools/RevoU.png" alt="Tools 1">
+            </div>
+
+            <div class="tools-member">
+                <img src="tools/KampusMerdeka.png" alt="Tools 2">
+            </div>
+
+            <div class="tools-member">
+                <img src="tools/Slack.png" alt="Tools 3">
+            </div>
+
+            <div class="tools-member">
+                <img src="tools/canvas.png" alt="Tools 4">
+            </div>
+
+            <div class="tools-member">
+                <img src="tools/Looker.png" alt="Tools 5">
+            </div>
+
+            <div class="tools-member">
+                <img src="tools/vscode.png" alt="Tools 6">
+            </div>
+
+            <div class="tools-member">
+                <img src="tools/zoom.png" alt="Tools 7">
+            </div>
+
+            <div class="tools-member">
+                <img src="tools/github.png" alt="Tools 8">
+            </div>
+        </div>
+
+    </section>
+
+    <div class="contact">
+        <a href="https://mail.google.com/mail/u/0/?view=cm&tf=1&fs=1&to=sec.palembangteam23.tarevou@gmail.com" target="_blank"><img src="tools/Gmail.png" alt="Gmail"></a>
+        <hr>
+        <h6 style="text-align: center;font-size: medium;">@Team23</h6>
+    </div>
+
+</html>

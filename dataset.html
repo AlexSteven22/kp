@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team-23 Pizza Sales Report</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body class="all">
+    <div class="navbar">
+        <img class="logo" src="23 logo.png" alt="" width="200" height="100">
+
+        <a href="home.html">Home</a>
+        <a href="index.html">Report</a>
+        <div class="dropdown">
+          <button class="dropbtn">About 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="https://www.canva.com/design/DAGGziJvkkU/OpYjRLAB5tK8qw0S-whA0g/view?utm_content=DAGGziJvkkU&utm_campaign=designshare&utm_medium=link&utm_source=editor" target="_blank">Capstone Project</a>
+            <a href="https://mavenanalytics.io/data-playground?page=6&pageSize=5" target="_blank">Dataset Source</a>
+            <a href="https://drive.google.com/file/d/1moCEDXeSZqe4OUiROFCqApM_Eb0jAWT8/view?usp=sharing" target="_blank">ERD</a>
+          </div>
+        </div> 
+        <a href="dataset.html">Dataset</a>
+        <a href="our_team.html">Our Team</a>
+      </div>
+
+    <main class="main-data" style="padding-top: 40px;">
+        <div>
+            <table id="salesTable" class="display" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Order Details ID</th>
+                        <th>Pizza ID</th>
+                        <th>Quantity</th>
+                        <th>Pizza Type ID</th>
+                        <th>Size</th>
+                        <th>Price</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Ingredients</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <script>
+              $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "dataset_23.json",
+                dataType: "json",
+                success: function (data) {
+                    $('#salesTable').DataTable({
+                        data: data,
+                        columns: [
+                            { data: 'order_id' },
+                            { data: 'date' },
+                            { data: 'time' },
+                            { data: 'order_details_id' },
+                            { data: 'pizza_id' },
+                            { data: 'quantity' },
+                            { data: 'pizza_type_id' },
+                            { data: 'size' },
+                            { data: 'price' },
+                            { data: 'name' },
+                            { data: 'category' },
+                            { data: 'ingredients' }
+                        ]
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading JSON: " + status, error);
+                }
+            });
+        });
+        </script>
+    </main>
+</body>
+
+
+</html>
