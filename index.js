@@ -22,7 +22,7 @@ const getFilteredData = (dataset, selectedMonths, selectedPizzas) => {
 const mappedData = async (filteredData) => {
   const dataMonths = filteredData.map((data) => ({ ...data, date: data.date.split("/") }));
   const reduced = dataMonths.reduce((accumulator, currentVal) => {
-    const month = months[parseInt(currentVal.date[0]) - 1]; 
+    const month = months[parseInt(currentVal.date[0]) - 1];
     if (accumulator[month] == null) accumulator[month] = [];
     accumulator[month].push(currentVal);
     return accumulator;
@@ -58,8 +58,27 @@ const mappedByCategory = async (filteredData) => {
   return mappedCategory;
 };
 
+const mappedbyName = async (filteredData) => {
+  const reduce = filteredData.reduce((acc, curr) => {
+    const name = curr.name;
+    if (acc[name] == null) acc[name] = 0; // Inisialisasi jika belum ada
+    acc[name]++; // Tambahkan jumlah pizza dengan nama ini
+    return acc;
+  }, {});
+
+  // Ubah objek reduce menjadi array berisi jumlah masing-masing pizza
+  const mappedName = Object.keys(reduce)
+    .map(name => ({ label: name, value: reduce[name] }))
+    .sort((a,b) => b.value - a.value)
+    .slice(0,10);
+
+  return mappedName;
+};
+
 const orderByCategory = async (filteredData) => await mappedByCategory(filteredData);
 const orderBySize = async (filteredData) => await mappedBySize(filteredData);
+const orderbyName = async (filteredData) => await mappedbyName(filteredData);
+
 const totalRevenueMoM = async (filteredData) => {
   const data = await mappedData(filteredData);
   if (data) return data.map((item) => item.reduce((acc, curr) => acc + curr, 0));
@@ -71,7 +90,7 @@ const totalOrder = async (filteredData) => {
 
 document.addEventListener('DOMContentLoaded', async function () {
   const dataset = await fetchDataset();
-  
+
   let chart1, chart2, chart3, chart4, chart5;
 
   const updateCharts = async () => {
@@ -82,11 +101,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     let revenue = await totalRevenueMoM(filteredData);
 
-    let order = await totalOrder(filteredData);
+    let order = await totalOrder(filteredData)
     let ordsize = await orderBySize(filteredData);
     let ordcategory = await orderByCategory(filteredData);
+    let ordname = await orderbyName(filteredData);
 
-    if (!revenue || !order || !ordsize || !ordcategory) {
+    if (!revenue || !order || !ordname || !ordsize || !ordcategory) {
       return;
     }
     if (chart1) chart1.destroy();
@@ -95,7 +115,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (chart4) chart4.destroy();
     if (chart5) chart5.destroy();
 
-    
+
     document.getElementById('total-orders').textContent = filteredData.length;
     document.getElementById('no-of-pizza-types').textContent = [...new Set(filteredData.map(data => data.pizza_type_id))].length;
     const totalRevenue = revenue.reduce((acc, curr) => acc + curr, 0);
@@ -103,11 +123,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     const averageRevenue = totalRevenue / (revenue.length || 1);
     document.getElementById('average-revenue').textContent = `$${averageRevenue.toFixed(2)}`;
 
-    
+
     const totalPizzaSales = filteredData.reduce((acc, curr) => acc + parseInt(curr.quantity), 0);
     document.getElementById('total-pizza-sales').textContent = totalPizzaSales;
 
-    
     const ctx1 = document.getElementById('myChart1');
     chart1 = new Chart(ctx1, {
       type: 'line',
@@ -116,13 +135,13 @@ document.addEventListener('DOMContentLoaded', async function () {
           label: "Revenue MoM",
           data: revenue
         }],
-        labels: selectedMonths.map(month => months[month - 1]) 
+        labels: selectedMonths.map(month => months[month - 1])
       },
       options: {
         scales: {
           y: {
             beginAtZero: true,
-            min: 0,
+            min: Math.min(...revenue),
             grid: {
               display: false
             }
@@ -137,16 +156,16 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
     });
 
-    
+
     const ctx2 = document.getElementById('myChart2');
     chart2 = new Chart(ctx2, {
       type: 'bar',
       data: {
         datasets: [{
-          label: "Sales per Month",
+          label: "Sales Per Month",
           data: order
         }],
-        labels: selectedMonths.map(month => months[month - 1]) 
+        labels: selectedMonths.map(month => months[month - 1])
       },
       options: {
         scales: {
@@ -167,75 +186,44 @@ document.addEventListener('DOMContentLoaded', async function () {
       plugins: [ChartDataLabels]
     });
 
-    
-    const ctx3 = document.getElementById('myChart3').getContext('2d');
-    chart3 = new Chart(ctx3, {
-      type: 'bar',
-      data: {
-        labels: selectedMonths.map(month => months[month - 1]), 
-        datasets: [
-          {
-            label: 'Revenue',
-            type: 'line',
-            data: revenue,
-            borderWidth: 3,
-            borderColor: '#5fbaff',
-            backgroundColor: '#5fbaff',
-            pointRadius: 0,
-            pointHoverRadius: 4,
-            pointBackgroundColor: '#5fbaff',
-            pointBorderColor: '#5fbaff',
-            pointHoverBackgroundColor: '#5fbaff',
-            pointHoverBorderColor: '#5fbaff',
-            pointStyle: 'circle',
-            datalabels: {
-              display: false
-            }
-          },
-          {
-            label: 'Order Count',
-            type: 'bar',
-            data: order,
-            borderWidth: 1
-          }
-        ]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: {
-              display: false
-            }
-          },
-          x: {
-            grid: {
-              display: false
-            }
-          }
-        },
-        plugins: {
-          annotation: {
-            annotations: revenue.map((value, index) => ({
-              type: 'line',
-              scaleID: 'y',
-              value: value,
-              borderColor: 'rgba(255, 99, 132, 0.5)',
-              borderWidth: 2,
-              label: {
-                content: `Revenue: ${value}`,
-                enabled: true,
-                position: 'right'
-              }
-            }))
-          }
-        },
-        maintainAspectRatio: false
-      },
-      plugins: [ChartDataLabels]
-    });
 
-    
+    const ctx3 = document.getElementById('myChart3');
+chart3 = new Chart(ctx3, {
+  type: 'bar', // Use 'bar' type for horizontal bar chart in Chart.js 3
+  data: {
+    datasets: [{
+      label: 'Top 10 Pizza Sales',
+      data: ordname.map(item => item.value), // Use mapped data values
+      backgroundColor: '#5AA5E6' // Optional background color for bars
+    }],
+    labels: ordname.map(item => item.label) // Use mapped data labels
+  },
+  options: {
+    indexAxis: 'y', // Display bars horizontally
+    scales: {
+      x: {
+        beginAtZero: true,
+        grid: {
+          display: false
+        }
+      },
+      y: {
+        grid: {
+          display: false
+        }
+      }
+    },
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false // Hide legend if not needed
+      }
+    }
+  }
+});
+
+
+
     const ctx4 = document.getElementById('myChart4');
     chart4 = new Chart(ctx4, {
       type: 'pie',
@@ -272,7 +260,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       plugins: [ChartDataLabels]
     });
 
-    
+
     const ctx5 = document.getElementById('myChart5');
     chart5 = new Chart(ctx5, {
       type: 'bar',
@@ -306,6 +294,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   document.getElementById('month-select').addEventListener('change', updateCharts);
   document.getElementById('pizza-select').addEventListener('change', updateCharts);
 
-  
+
   updateCharts();
 });
