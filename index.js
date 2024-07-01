@@ -88,6 +88,8 @@ const totalOrder = async (filteredData) => {
   if (data) return data.map((item) => item.length);
 };
 
+
+
 document.addEventListener('DOMContentLoaded', async function () {
   const dataset = await fetchDataset();
 
@@ -116,16 +118,16 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (chart5) chart5.destroy();
 
 
-    document.getElementById('total-orders').textContent = filteredData.length;
+    document.getElementById('total-orders').textContent = filteredData.length.toLocaleString();
     document.getElementById('no-of-pizza-types').textContent = [...new Set(filteredData.map(data => data.pizza_type_id))].length;
     const totalRevenue = revenue.reduce((acc, curr) => acc + curr, 0);
-    document.getElementById('total-revenue').textContent = `$${totalRevenue.toFixed(2)}`;
+    document.getElementById('total-revenue').textContent = `$${totalRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
     const averageRevenue = totalRevenue / (revenue.length || 1);
-    document.getElementById('average-revenue').textContent = `$${averageRevenue.toFixed(2)}`;
+    document.getElementById('average-revenue').textContent = `$${averageRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
 
 
     const totalPizzaSales = filteredData.reduce((acc, curr) => acc + parseInt(curr.quantity), 0);
-    document.getElementById('total-pizza-sales').textContent = totalPizzaSales;
+    document.getElementById('total-pizza-sales').textContent = totalPizzaSales.toLocaleString();
 
     const ctx1 = document.getElementById('myChart1');
     chart1 = new Chart(ctx1, {
